@@ -13,6 +13,7 @@ const userScheme = new mongoose.Schema({
     type: String,
     required: true,
   },
+  note: [],
 });
 
 export const UserModel = mongoose.model("UserModel", userScheme);
