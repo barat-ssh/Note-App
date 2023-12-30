@@ -6,8 +6,9 @@ import bcrypt from "bcrypt";
 import { UserModel } from "../models/db";
 
 // creating endpoints
-router.get("/", (req, res) => {
-  res.send("world");
+router.get("/data", async (req, res) => {
+  const alreadyExists = await UserModel.find();
+  res.status(200).json(alreadyExists);
 });
 
 router.post("/register", async (req, res) => {
@@ -33,6 +34,8 @@ router.post("/login", async (req, res) => {
   if (alreadyExists) {
     if (alreadyExists.password === password) {
       res.status(200).json({ message: "Logged In" });
+    } else {
+      res.status(401).json({ message: "Incorrect email or password" });
     }
   } else {
     res.status(401).json({ message: "incorrect username or password" });
@@ -66,22 +69,22 @@ router.post("/onula", async (req, res) => {
   }
 });
 
-router.post("/onula", async (req, res) => {
-  const { email, password } = req.body;
-  const alreadyExists = await UserModel.findOne({ email });
-  if (alreadyExists) {
-    bcrypt.compare(password, alreadyExists.password, (err, result) => {
-      if (err) {
-        res.status(401).json({ message: "Error while logging in..", err });
-      } else if (result) {
-        res.status(200).json({ message: "Logged in..." });
-      } else {
-        res.status(401).json({ message: "Incorrect email and password" });
-      }
-    });
-  } else {
-    res.status(202).json({ message: "Incorrect email or password" });
-  }
-});
+//router.post("/onula", async (req, res) => {
+//const { email, password } = req.body;
+//const alreadyExists = await UserModel.findOne({ email });
+// if (alreadyExists) {
+// bcrypt.compare(password, alreadyExists?.password, (err, result) => {
+// if (err) {
+// res.status(401).json({ message: "Error while logging in..", err });
+//} else if (result) {
+// res.status(200).json({ message: "Logged in..." });
+//} else {
+//res.status(401).json({ message: "Incorrect email and password" });
+//}
+//});
+//} else {
+//res.status(202).json({ message: "Incorrect email or password" });
+//}
+// });
 
 export default router;

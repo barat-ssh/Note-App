@@ -1,4 +1,3 @@
-import { error } from "console";
 import jwt from "jsonwebtoken";
 
 export const secret_key = "jsonwebtoken";

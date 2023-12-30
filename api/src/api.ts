@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 const app = express();
 const PORT = 3001;
 app.use(express.json());
@@ -10,9 +9,11 @@ connectMongoose();
 
 // importing routes
 import credentialsRoute from "./routes/credentials";
+import noteRoute from "./routes/notes";
 
 // using routes
-app.use("/creds", credentialsRoute);
+app.use("/", credentialsRoute);
+app.use("/", noteRoute);
 
 // http connect
 app.listen(PORT, () => {
