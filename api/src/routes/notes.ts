@@ -25,8 +25,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-export default router;
-
 router.post("/:id/add", async (req, res) => {
   const id = req.params.id;
   const { title, note } = req.body;
@@ -43,3 +41,5 @@ router.post("/:id/add", async (req, res) => {
     res.status(402).json({ message: "invalid userID" });
   }
 });
+
+export default router;
